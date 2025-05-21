@@ -46,13 +46,7 @@ const registerUser = async (
       throw new Error(errorData.error || "Registration failed");
     }
 
-    const data = await response.json();
-    if (data.emailSent) {
-      toast.success("Registration successful! Welcome email has been sent to your email address.");
-    } else {
-      toast.success("Registration successful!");
-    }
-    return data;
+    return await response.json();
   } catch (error) {
     if (error instanceof Error) {
       throw error;

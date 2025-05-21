@@ -63,21 +63,14 @@ const registerUser = async (req, res) => {
           password
         ];
 
-        db.query(insertCandidateQuery, values, async (err) => {
+        db.query(insertCandidateQuery, values, (err) => {
           if (err) {
             console.error("❌ Error inserting candidate:", err);
             return res.status(500).json({ error: "Database insertion error" });
           }
 
-          // Send registration email
-          const emailService = require('../services/emailService');
-          const emailSent = await emailService.sendRegistrationEmail(email, name);
-
           console.log("✅ Candidate registered successfully with full info");
-          return res.status(201).json({ 
-            message: "Candidate registered successfully",
-            emailSent: emailSent
-          });
+          return res.status(201).json({ message: "Candidate registered successfully" });
         });
       } else if (role === "recruiter") {
         const insertRecruiterQuery = `
@@ -85,7 +78,7 @@ const registerUser = async (req, res) => {
     VALUES (?, ?,  ?);
         `;
 
-        db.query(insertRecruiterQuery, [name, user_id, password], async (err) => {
+        db.query(insertRecruiterQuery, [name, user_id, password], (err) => {
           if (err) {
             console.error("❌ Error inserting recruiter:", err);
             return res.status(500).json({ error: "Database insertion error" });
@@ -96,10 +89,7 @@ const registerUser = async (req, res) => {
           const emailSent = await emailService.sendRegistrationEmail(email, name);
 
           console.log("✅ Recruiter registered successfully");
-          return res.status(201).json({ 
-            message: "Recruiter registered successfully",
-            emailSent: emailSent
-          });
+          return res.status(201).json({ message: "Recruiter registered successfully" });
         });
       } else {
         return res.status(400).json({ error: "Invalid role" });

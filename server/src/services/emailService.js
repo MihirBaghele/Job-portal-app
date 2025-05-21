@@ -1,22 +1,22 @@
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 
+// Load environment variables
 dotenv.config({ path: __dirname + '/../../../.env' });
 
-// Log environment variables
-console.log('Email Service Environment Variables:', {
-    emailUser: process.env.EMAIL_USER || 'Not set',
-    emailPass: process.env.EMAIL_PASS ? 'Set' : 'Not set'
-});
 
-// Create a transporter with better configuration
+// Create a transporter with more reliable configuration
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 

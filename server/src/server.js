@@ -6,14 +6,7 @@ const candidateRoutes = require("./routes/candidateRoutes");
 const requirementRoutes = require("./routes/requirementRoutes");
 const userRoutes = require("./routes/userRoutes"); // ✅ Add user authentication routes
 
-// Load environment variables from the root of the server directory
-dotenv.config({ path: __dirname + '/../../../.env' });
-
-// Log environment variables
-console.log('Environment variables loaded:', {
-    emailUser: process.env.EMAIL_USER || 'Not set',
-    emailPass: process.env.EMAIL_PASS ? 'Set' : 'Not set'
-});
+dotenv.config(); // Load environment variables
 
 const app = express();
 app.use(express.json());
